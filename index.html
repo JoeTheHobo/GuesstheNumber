@@ -1,0 +1,200 @@
+<center>
+<p id="level">
+</p>
+  <table>
+     <tr>
+       <td>
+  <p>You chose: </p>
+       </td>
+       <td>
+<p id="debug">
+       </td>
+    </tr>
+  </table>
+
+</p>
+
+<div id="puthere">
+
+</div>
+
+<div id="shop">
+  <h1>
+  SHOP
+  </h1>
+  <button onclick="a()" id="darkthemeb">Dark Theme, Cost 5</button>
+  <button onclick="buy()" id="hint1b">Hint, Cost 6</button>
+</div>
+
+<div id="inventory">
+  <h1>Items</h1>
+  <button onclick="lighttheme()">Basic Light Theme</button>
+</div>
+
+<script>
+  var timer = 0;
+  var level = 1;
+  var rnd;
+  var fakelevel;
+  document.getElementById("level").innerHTML = "Level: " + level;
+  start();
+  
+  function start() {
+    fakelevel = 0;
+  var have = [];
+  for (var i = 0; i < (level + 1); i++) {
+  	var x = document.createElement("BUTTON");
+    
+    for (var e = 0; e < 1; e--) {
+      rnd = Math.floor(Math.random() * (level + 1)) + 1;
+      var a = have.indexOf(rnd);
+      console.log(have.indexOf(rnd));
+      if (a == -1) {
+      	e = 2;
+      }
+		}    
+    
+    have.push(rnd);
+    
+    x.innerHTML = "???";
+    x.id = rnd;
+    x.class = "a";
+    x.onclick = function() {
+      if (fakelevel == 0) {
+    document.getElementById("debug").innerHTML = document.activeElement.id;
+      fakelevel = 1;
+        var a;
+      for (a = 1; a < (level + 2); a++) {
+        var x = document.getElementById(a);
+        x.style.color = "red";
+        x.innerHTML = a + "" + a + "" + a;
+      }
+      x = document.getElementById(a - 1).style.color = "green";
+        
+    setTimeout(function() { check();
+                          }     
+      ,1000);
+        
+          }
+ 		};
+    document.getElementById("puthere").appendChild(x);
+
+ 	 }
+  }
+  
+  
+  function check() {
+  	if (document.getElementById("debug").innerHTML == (level + 1)) {
+  		level++;
+  } else {
+  	if (level == 1) {
+    
+    } else {
+    
+  	level = Number(document.getElementById("debug").innerHTML);
+    }
+  }
+    document.getElementById("level").innerHTML = "Level: " + level;
+    
+    var myNode = document.getElementById("puthere");
+			while (myNode.firstChild) {
+    		myNode.removeChild(myNode.firstChild);
+			}
+    
+    
+    start();
+  }
+  
+  //Start Shop
+  var b = 0;//0 = no
+  
+  function a() {//BUY DARK THEME
+  	if (level > 4) {
+    	if (b == 0) {
+      	b = 1;
+        level = level - 5;
+        if (level == 0) {
+         level = 1;
+        }
+        
+        //Buying
+        var newbutton = document.createElement("BUTTON");
+        newbutton.innerHTML = "Dark Theme";
+ 				newbutton.onclick = function() {//FUNCTION
+        document.body.style.backgroundColor = "black";
+    		document.body.style.color = "white";
+        };
+          
+				//END
+        document.getElementById("inventory").appendChild(newbutton);
+        
+        //Hiding
+        document.getElementById("darkthemeb").style.display = "none";
+        
+        document.getElementById("level").innerHTML = "Level: " + level;
+        
+        
+        var myNode = document.getElementById("puthere");
+			while (myNode.firstChild) {
+    		myNode.removeChild(myNode.firstChild);
+			}
+        start();
+      }
+    }
+  }
+  
+  function buy() { 
+    if (level > 5) {
+       level = level - 6;
+       if (level == 0) {
+         level = 1;
+       }
+       //buying
+       var newbutton = document.createElement("BUTTON");
+        newbutton.innerHTML = "Hint1";
+         newbutton.id = "hint1";
+            newbutton.onclick = function() {//FUNCTION
+              if (timer == 0) {
+                      var myinterval = setInterval(function() {
+                        if (timer == 0) {
+                          //PUT HERE
+                          var newRND = Math.floor(Math.random() * level) + 1;
+                          var y = document.getElementById(newRND);
+                          y.style.color = "red";
+                          y.innerHTML = newRND + "" + newRND + "" + newRND;
+                          //END HERE
+                          timer = 120;
+                        }
+                        timer = Math.abs(timer - 1);
+                        document.getElementById("hint1").innerHTML = "Hint1 Recharging: " + timer;
+                        if (timer == 0) {
+                          timer = 0;
+                document.getElementById("hint1").innerHTML = "Hint1";
+                          clearInterval(myinterval);
+                        }
+                      }, 1000);
+
+              }
+                                            };
+       //END
+        document.getElementById("inventory").appendChild(newbutton);
+       //Hiding
+        document.getElementById("hint1b").style.display = "none";
+        
+        document.getElementById("level").innerHTML = "Level: " + level;
+        var myNode = document.getElementById("puthere");
+			while (myNode.firstChild) {
+    		myNode.removeChild(myNode.firstChild);
+			}
+        start();
+     }
+  }
+  
+  //Inventory
+  function lighttheme() {
+  	document.body.style.backgroundColor = "white";
+    document.body.style.color = "black";
+  }
+</script>
+</center>
+
